@@ -9,7 +9,10 @@ import {
   Form,
 } from "@/styles/StyledSizeSelector";
 
-export default function SizeSelector({ selectedSize, setSelectedSize }) {
+export default function SizeSelector({
+  selectedSize,
+  setSelectedSize,
+}: SizeSelectorProps) {
   const sizes = [
     {
       id: "Short",

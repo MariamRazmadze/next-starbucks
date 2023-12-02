@@ -34,6 +34,13 @@ type CoffeeData = {
   };
 };
 
+type Coffees = {
+  items: CoffeeItem[];
+  photoName: string;
+  link: string;
+  name: string;
+};
+
 interface GroupedCoffees {
   [key: string]: CoffeeItem[];
 }
@@ -48,6 +55,7 @@ type MenuProps = {
 };
 
 type CoffeeType = {
+  [key: string]: any;
   name: string;
   photoName: string;
   link: string;
@@ -106,3 +114,8 @@ interface TabProps {
 interface TabContentProps {
   item: ContentItem;
 }
+
+type SizeSelectorProps = {
+  selectedSize: string;
+  setSelectedSize: (size: string) => void;
+};

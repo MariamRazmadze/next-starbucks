@@ -1,6 +1,8 @@
 import { getCoffees } from "@/lib/getData";
 import CategoryPage from "../CategoryPage";
 import SideMenu from "../SideMenu";
+import { Suspense } from "react";
+import Loader from "@/components/loader";
 type Params = {
   params: {
     category: string;
@@ -26,9 +28,11 @@ export default async function Category({ params: { category } }: Params) {
   );
 
   return (
-    <div className="menu-body">
-      <SideMenu coffees={coffees} />
-      <CategoryPage category={categoryItems} />
-    </div>
+    <Suspense fallback={<Loader />}>
+      <div className="menu-body">
+        <SideMenu coffees={coffees} />
+        <CategoryPage category={categoryItems} />
+      </div>
+    </Suspense>
   );
 }
