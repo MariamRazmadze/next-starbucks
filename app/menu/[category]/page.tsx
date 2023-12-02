@@ -36,3 +36,22 @@ export default async function Category({ params: { category } }: Params) {
     </Suspense>
   );
 }
+
+export async function generateStaticParams() {
+  const coffeeData: Promise<CoffeeData> = getCoffees();
+  const coffeedata: CoffeeData = await coffeeData;
+
+  const coffees: CoffeeType[] = Object.values(coffeedata).map(
+    (coffee: CoffeeType) => {
+      const key = Object.keys(coffee)[0];
+      const coffeeValues = coffee[key];
+      return coffeeValues;
+    }
+  );
+
+  const paths = coffees.map((coffee: CoffeeType) => ({
+    params: { category: coffee.name.toLowerCase().replace(/ /g, "-") },
+  }));
+
+  return paths;
+}

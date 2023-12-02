@@ -1,7 +1,7 @@
 const API_URL = "https://starbucksapi.pythonanywhere.com";
 
 export async function getCoffees() {
-  const res = await fetch(`${API_URL}/coffees`);
+  const res = await fetch(`${API_URL}/coffees`, { next: { revalidate: 60 } });
   if (!res.ok) throw Error("failed to fetch data");
   const { coffeeData } = await res.json();
   return coffeeData;
