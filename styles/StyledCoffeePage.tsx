@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const TopSection = styled.div`
   display: flex;
@@ -136,8 +136,47 @@ export const MiddleTexts = styled.div`
   }
 `;
 
-// export const OrderButton = styled(WaveButton)`
-export const OrderButton = styled.button`
+const wave = keyframes`
+  0% {
+    background-position: 100% 0;
+  }
+  50% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+`;
+
+export const WaveButton = styled.button`
+  background-color: #00754a;
+  border: none;
+  outline: none;
+  border-radius: 500px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.24) 0 8px 12px rgba(0, 0, 0, 0.14);
+  color: white;
+  display: inline-block;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow: hidden;
+  padding: 18px 2.4rem;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+
+  &:active {
+    background: linear-gradient(
+      90deg,
+      #00754a 0%,
+      rgba(255, 255, 255, 0.5) 100%
+    );
+    background-size: 200% 100%;
+    animation: ${wave} 0.5s ease-out forwards;
+  }
+`;
+
+export const OrderButton = styled(WaveButton)`
   position: fixed;
   right: 4rem;
   bottom: 120px;

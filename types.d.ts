@@ -119,3 +119,25 @@ type SizeSelectorProps = {
   selectedSize: string;
   setSelectedSize: (size: string) => void;
 };
+
+interface Question {
+  question: string;
+  options: string[];
+  correctOption: number;
+  points: number;
+}
+interface QuizAction {
+  type: string;
+  questionsPayload?: Question[];
+  answerPayload?: number;
+}
+
+interface QuestionProps {
+  question: Question;
+  dispatch: React.Dispatch<QuizAction>;
+  answer?: number | null;
+  index: number;
+  numQuestions: number | undefined;
+  points: number | null | undefined;
+  maxPossiblePoints: number | undefined;
+}

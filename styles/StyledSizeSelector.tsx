@@ -10,9 +10,8 @@ export const SizeOptions = styled.h2`
   font-weight: 700;
   padding-bottom: 1rem;
   position: relative;
-
   &::after {
-    background: ${({ theme }) => theme.secondaryBackground};
+    background: #d4e9e2;
     border-radius: 12px;
     bottom: 0;
     content: "";
@@ -61,7 +60,7 @@ export const RadioButton = styled.input.attrs({ type: "radio" })`
   border: 2px solid transparent;
   transition: background-color 1s ease, background-image 2s ease;
   &:checked {
-    background-color: ${({ theme }) => theme.secondaryBackground};
-    border: 2px solid ${({ theme }) => theme.greenAccent};
+    background-color: #d4e9e2;
+    border: 2px solid #00754a;
   }
 `;
