@@ -141,3 +141,23 @@ interface QuestionProps {
   points: number | null | undefined;
   maxPossiblePoints: number | undefined;
 }
+
+interface Position {
+  latitude: number;
+  longitude: number;
+}
+
+interface CityData {
+  cityName: string;
+  address: string;
+  country: string;
+  position: {
+    lat: number;
+    lng: number;
+  };
+  id: string;
+  storeHours: {
+    open: string;
+    close: string;
+  };
+}

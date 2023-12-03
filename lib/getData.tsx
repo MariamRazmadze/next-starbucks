@@ -24,3 +24,40 @@ export async function getRewardsData() {
   if (!res.ok) throw Error("failed to fetch data");
   return res.json();
 }
+
+export async function fetchCities() {
+  const res = await fetch(`${API_URL}/cities`);
+  if (!res.ok) throw Error("failed to fetch data");
+  return res.json();
+}
+
+export async function fetchCity(id: string) {
+  const res = await fetch(`${API_URL}/cities/${id}`);
+  if (!res.ok) throw Error("Failed getting city");
+
+  const data = await res.json();
+  return data;
+}
+
+export async function getAddressFromApi({ latitude, longitude }: Position) {
+  const res = await fetch(
+    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`
+  );
+  if (!res.ok) throw Error("Failed getting address");
+
+  const data = await res.json();
+  return data;
+}
+
+export async function fetchAddress() {
+  const position = await new Promise<GeolocationPosition>((resolve, reject) =>
+    navigator.geolocation.getCurrentPosition(resolve, reject)
+  );
+
+  const { latitude, longitude } = position.coords;
+  const data = await getAddressFromApi({ latitude, longitude });
+
+  const address = `${data.locality}, ${data.city} ${data.postcode}, ${data.countryName}`;
+
+  return { position: { latitude, longitude }, address };
+}
