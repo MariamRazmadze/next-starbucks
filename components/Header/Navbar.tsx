@@ -15,9 +15,11 @@ import { NavbarBrand } from "./NavbarBrand";
 import { NavLinks } from "./NavLinks";
 import { ModalButton } from "./ModalButton";
 import { NavbarModal } from "./NavbarModal";
+import { useSession } from "next-auth/react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const session = useSession();
 
   const toggleMenu = () => {
     setIsOpen((is) => !is);
@@ -52,16 +54,26 @@ export default function Navbar() {
             </NavListItem>
 
             <>
-              <NavListItem>
-                <Link href="/login">
-                  <LightButton>Log in </LightButton>
-                </Link>
-              </NavListItem>
-              <NavListItem>
-                <Link href="/register">
-                  <DarkButton>Join Now </DarkButton>
-                </Link>
-              </NavListItem>
+              <>
+                {session.data ? (
+                  <NavListItem>
+                    <Link href="/api/auth/signout?callbackUrl=/">Logout</Link>
+                  </NavListItem>
+                ) : (
+                  <>
+                    <NavListItem>
+                      <Link href="/api/auth/signin?callbackUrl=/">
+                        <LightButton>Login</LightButton>
+                      </Link>
+                    </NavListItem>
+                    <NavListItem>
+                      <Link href="/register">
+                        <DarkButton>Join Now </DarkButton>
+                      </Link>
+                    </NavListItem>
+                  </>
+                )}
+              </>
             </>
           </NavbarRight>
           <ModalButton onClick={toggleMenu} $isOpen={isOpen} />

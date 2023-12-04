@@ -102,3 +102,14 @@ p {
     display: block;
   }
 }
+
+.form-floating > .form-control {
+  height: 50px;
+  font-size: 19px;
+  line-height: 25px;
+  margin-bottom: 10px;
+}
+
+.form-floating > label {
+  font-size: 14px;
+}
