@@ -161,3 +161,45 @@ interface CityData {
     close: string;
   };
 }
+
+interface CartItemType {
+  coffeeId: number;
+  name: string;
+  image: string;
+  stars: string;
+  quantity: number;
+  size: string;
+  unitPrice: number;
+  totalPrice: number;
+}
+
+type CartAction =
+  | { type: "addItem"; payload: CartItemType }
+  | { type: "deleteItem"; payload: number }
+  | { type: "increaseQuantity"; payload: number }
+  | { type: "decreaseQuantity"; payload: number }
+  | { type: "clearCart" };
+
+interface CartState {
+  cart: CartItemType[];
+}
+
+interface OrderItem {
+  id: number;
+  coffee_id: number;
+  order_id: number;
+  name: string;
+  quantity: number;
+  size: string;
+  unit_price: number;
+  total_price: number;
+}
+
+interface OrderData {
+  full_name: string;
+  phone_number: string;
+  id_number: string;
+  address: string;
+  items: string;
+  total_price: number;
+}

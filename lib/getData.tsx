@@ -61,3 +61,39 @@ export async function fetchAddress() {
 
   return { position: { latitude, longitude }, address };
 }
+
+export async function getOrders() {
+  const res = await fetch(`${API_URL}/order`);
+  if (!res.ok) throw Error("failed to fetch data");
+  const { data } = await res.json();
+  return data;
+}
+
+export async function getOrder(id: string) {
+  const res = await fetch(`${API_URL}/order/${id}`);
+  // if (!res.ok) throw Error(`Couldn't find order #${id}`);
+  if (!res.ok) return undefined;
+  const { data } = await res.json();
+  return data;
+}
+
+export async function createOrder(newOrder: OrderData) {
+  try {
+    const res = await fetch(`${API_URL}/order`, {
+      method: "POST",
+      body: JSON.stringify(newOrder),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok)
+      throw Error(
+        `Request failed with status ${res.status}: ${res.statusText}`
+      );
+
+    const { orderId } = await res.json();
+    return { id: orderId };
+  } catch {
+    throw Error("Failed creating your order");
+  }
+}
