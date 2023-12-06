@@ -17,3 +17,4 @@ export default withAuth(function middleware(req) {
 });
 // export const config = { matcher: ["/register"] };
 export const config = { matcher: ["/order"] };
+// export const config = { matcher: ["/menu/order/new"] };

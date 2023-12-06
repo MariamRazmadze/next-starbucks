@@ -10,7 +10,6 @@ export default async function MainMenu() {
     const coffeeValues = coffee[key];
     return coffeeValues;
   });
-  console.log(coffees);
 
   return <FirstPage coffees={coffees} />;
 }

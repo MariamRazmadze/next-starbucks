@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useCart } from "@/app/context/useCart";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createOrder, fetchAddress } from "@/lib/getData";
 import {
   StyledOrder,
@@ -30,6 +30,7 @@ export default function CreateOrder() {
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
 
   const fetchAndSetAddress = () => {
     fetchAddress().then((data) => {
@@ -47,13 +48,13 @@ export default function CreateOrder() {
       ...data,
       cart: JSON.parse(data.items),
     };
-    console.log("Processed order data:", order);
     const errors = {};
 
     if (Object.keys(errors).length > 0) return errors;
     const newOrder = await createOrder(order);
     dispatch({ type: "clearCart" });
     setIsSubmitting(false);
+    setOrderPlaced(true);
     return router.push(`/menu/order/${newOrder.id}`);
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -72,14 +73,20 @@ export default function CreateOrder() {
     handleOrder(data);
   };
 
-  if (!cart.length) return <EmptyOrder />;
+  useEffect(() => {
+    return () => {
+      setOrderPlaced(false);
+    };
+  }, []);
+
+  if (!cart.length && !orderPlaced) return <EmptyOrder />;
   return (
     <StyledOrder>
       <OrderGoBack onClick={() => router.back()}> Go Back</OrderGoBack>
       <OrderFormWrapper>
         <h2>
-          {userData?.username}, enter your current details to ensure a smooth
-          delivery process
+          {userData?.name ? `${userData.name},` : ""} Enter your current details
+          to ensure a smooth delivery process
         </h2>
         <form onSubmit={handleSubmit}>
           <InputsContainer>

@@ -36,7 +36,6 @@ interface Order {
 function Order({ orderId }: { orderId: string }) {
   const { data: session } = useSession();
   const userData = session?.user;
-
   const [order, setOrder] = useState<Order | null>(null);
   const [estimatedDelivery] = useState(
     new Date(Date.now() + 30 * 60000).toISOString()
@@ -87,7 +86,9 @@ function Order({ orderId }: { orderId: string }) {
         <OrderContainer>
           <p>
             {minutesLeft >= 0
-              ? `Your order will arrive in ${minutesLeft} minutes`
+              ? `${
+                  userData?.name ? `${userData.name},` : ""
+                } Your order will arrive in ${minutesLeft} minutes`
               : "Order should have arrived"}
           </p>
           <EstimatedP>

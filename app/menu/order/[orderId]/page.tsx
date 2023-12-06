@@ -13,7 +13,6 @@ export default async function OrderPage({ params: { orderId } }: Params) {
   const orderData: Promise<OrderData> = getOrder(orderId);
   const order: OrderData = await orderData;
   if (!order) return notFound();
-  console.log(order);
 
   return <Order orderId={orderId} />;
 }

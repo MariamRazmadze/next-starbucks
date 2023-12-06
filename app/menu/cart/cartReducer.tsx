@@ -45,20 +45,22 @@ export function cartReducer(state: CartState, action: CartAction) {
       };
 
     case "decreaseQuantity":
+      const updatedCart = state.cart.map((item) => {
+        if (item.coffeeId === action.payload && item.quantity > 1) {
+          return {
+            ...item,
+            quantity: item.quantity - 1,
+            totalPrice: (item.quantity - 1) * item.unitPrice,
+          };
+        } else if (item.coffeeId === action.payload && item.quantity === 1) {
+          return null;
+        }
+        return item;
+      });
+
       return {
         ...state,
-        cart: state.cart
-          .map((item) => {
-            if (item.coffeeId === action.payload && item.quantity > 1) {
-              return {
-                ...item,
-                quantity: item.quantity - 1,
-                totalPrice: (item.quantity - 1) * item.unitPrice,
-              };
-            }
-            return item;
-          })
-          .filter((item) => item.quantity > 0),
+        cart: updatedCart.filter((item): item is CartItemType => item !== null),
       };
 
     case "clearCart":
