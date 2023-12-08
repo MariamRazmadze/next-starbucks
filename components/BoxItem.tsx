@@ -17,12 +17,7 @@ export function BoxItem({ item, isReversed }: BoxItemProps) {
         $isReversed={isReversed}
         style={{ backgroundColor: item.backgroundColor }}
       >
-        <Image
-          src={"/" + item.photoName}
-          alt={item.title}
-          width={720}
-          height={620}
-        />
+        <Image src={item.photoName} alt={item.title} width={720} height={620} />
 
         <BoxTexts>
           <BoxTitle>{item.title}</BoxTitle>

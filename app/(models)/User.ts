@@ -1,10 +1,19 @@
-import mongoose, { Schema, mongo } from "mongoose";
-mongoose.connect(process.env.MONGODB_URI as string);
-mongoose.Promise = global.Promise;
+import { Schema, model, models } from "mongoose";
+import { connectToDb } from "../utils/database";
+
+connectToDb();
+
 const userSchema = new Schema(
   {
-    name: String,
-    email: String,
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+    },
+    email: {
+      type: String,
+      unique: [true, "Email already exists"],
+      required: [true, "Email is required"],
+    },
     password: String,
   },
   {
@@ -12,6 +21,6 @@ const userSchema = new Schema(
   }
 );
 
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+const User = models.User || model("User", userSchema);
 
 export default User;
